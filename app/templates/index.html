@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Social Media</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .post {
+            margin-bottom: 20px;
+        }
+        .post .title {
+            font-weight: bold;
+        }
+        .post .content {
+            margin-top: 5px;
+        }
+        .post .author {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Social Media</h1>
+
+    <h2>Users:</h2>
+
+    {% for user in users %}
+        <div class="post">
+            <div class="title">{{ user.id }}</div>
+            <div class="content">{{ user.username }}</div>
+            <div class="author">{{ user.email }}</div>
+        </div>
+    {% endfor %}
+</body>
+</html>
