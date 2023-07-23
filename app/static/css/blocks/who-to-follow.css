@@ -1,5 +1,5 @@
 .who-to-follow {
-  background: #f5f8fa;
+  background: #F6FFDE;
   border-radius: 15px;
 }
 
@@ -45,8 +45,8 @@
 }
 
 .who-to-follow__button {
-  border: 1px solid #1da0f2;
-  color: #1da0f2;
+  border: 1px solid #A0C49D;
+  color: #455a43;
   font-size: 15px;
   font-weight: 700;
   border-radius: 15px;
@@ -56,6 +56,6 @@
 }
 
 .who-to-follow__button:hover {
-  background: rgba(29, 161, 242, 0.1);
+  background: #C9DBB2;
   cursor: pointer;
 }

@@ -1,18 +1,66 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="{{ url_for('login') }}" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required>
-        <br>
-        <input type="submit" value="Log In">
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} Головна - Трембіта {% endblock title %}
+
+{% block menu %}
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/explore.svg') }}" class="sidebar-menu__item-icon" /> Тренди
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/notifications.svg') }}" class="sidebar-menu__item-icon" /> Сповіщення
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/messages.svg') }}" class="sidebar-menu__item-icon" /> Повідомлення
+</div>
+<div class="sidebar-menu__item" sidebar-menu__item--active>
+    <img src="{{ url_for('static', filename='svg/profile.svg') }}" class="sidebar-menu__item-icon" /> Профіль
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
+</div>
+{% endblock menu %}
+
+{% block content %}
+<h1>Вітаємо у Трембіті!</h1>
+Будь ласка, увійдіть або зареєструйтесь
+
+<h2>Вхід</h2>
+<form action="/login" method="POST">
+  <label for="username">Логін (нік):</label>
+  <input type="text" id="username" name="username" placeholder="Введіть свій логін (нік)">
+  <br>
+  <label for="password">Пароль:</label>
+  <input type="password" id="password" name="password" placeholder="Введіть свій пароль">
+  <br>
+  <input type="submit" value="Увійти">
+</form>
+
+<h2>Реєстрація</h2>
+<form action="/register" method="POST">
+  <label for="name">Ім'я користувача:</label>
+  <input type="text" id="name" name="name" placeholder="Введіть своє ім'я користувача">
+  <br>
+  <label for="username">Унікальний нік:</label>
+  <input type="text" id="username" name="username" placeholder="Введіть унікальний нік">
+  <br>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" placeholder="Введіть свою електронну пошту">
+  <br>
+  <label for="phone">Телефон:</label>
+  <input type="tel" id="phone" name="phone" placeholder="Введіть номер телефону">
+  <br>
+  <label for="password">Пароль:</label>
+  <input type="password" id="password" name="password" placeholder="Введіть пароль">
+  <br>
+  <input type="submit" value="Зареєструватись">
+</form>
+{% endblock content %}
+
+{% block trending %}
+{% endblock trending %}
+
+{% block whoToFollow %}
+{% endblock whoToFollow %}

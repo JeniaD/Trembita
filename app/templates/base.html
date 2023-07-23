@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Twitter markup</title>
     <meta charset="utf-8">
+    <title>{% block title %} Трембіта {% endblock title %}</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/layout.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/brand.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/sidebar-menu.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/tweet.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/octave.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/trends-for-you.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/who-to-follow.css') }}" />
   </head>
   <body>
     <div class="layout">
       <div class="layout__left-sidebar">
-        <img src="{{ url_for('static', filename='svg/twitter.svg') }}" class="brand" />
+        <img src="{{ url_for('static', filename='svg/Trembita.svg') }}" class="brand" />
         <div class="sidebar-menu">
+          {% block menu %}
           <div class="sidebar-menu__item"> <!--sidebar-menu__item--active-->
             <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
           </div>
@@ -35,113 +36,47 @@
           <div class="sidebar-menu__item">
             <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
           </div>
+          {% endblock menu %}
         </div>
       </div>
       <div class="layout__main">
-        <div class="tweet">
-          <!-- <img class="tweet__author-logo" src="{{ url_for('static', filename='img/profile-image-1.jpg') }}" /> -->
-          <div class="tweet__main">
-            <div class="tweet__header">
-              <div class="tweet__author-name"> Джек </div>
-              <div class="tweet__author-slug"> @beckiandchris </div>
-              <div class="tweet__publish-time"> 50хв </div>
-            </div>
-            <div class="tweet__content"> Тест тест тест туруруууу </div>
-          </div>
-        </div>
-        <div class="tweet">
-          <!-- <img class="tweet__author-logo" src="{{ url_for('static', filename='img/profile-image-1.jpg') }}" /> -->
-          <div class="tweet__main">
-            <div class="tweet__header">
-              <div class="tweet__author-name"> Весіння шапочка </div>
-              <div class="tweet__author-slug"> @elixirdigest </div>
-              <div class="tweet__publish-time"> 3год </div>
-            </div>
-            <div class="tweet__content"> я зїла 3 морозива аааа <a href="https://elixirdigest.net/digests/276">https://elixirdigest.net/digests/276</a> @_tamas_soos #РудьКруті </div>
-          </div>
-        </div>
-        <div class="tweet">
-          <!-- <img class="tweet__author-logo" src="{{ url_for('static', filename='img/profile-image-1.jpg') }}" /> -->
-          <div class="tweet__main">
-            <div class="tweet__header">
-              <div class="tweet__author-name"> праграміст </div>
-              <div class="tweet__author-slug"> @chris_martin </div>
-              <div class="tweet__publish-time"> 3дн </div>
-            </div>
-            <div class="tweet__content"> О дивіться який скрин гиги ("holes" -- <a href="https://typeclasses.com/typed-holes">https://typeclasses.com/typed-holes</a>) <img class="tweet__image" src="{{ url_for('static', filename='img/post-image-1.jpeg') }}" />
-            </div>
-          </div>
-        </div>
-        
+        {% block content %}
+          <h1>Вітаємо в Трембіті!</h1>
+        {% endblock content %}     
       </div>
       <div class="layout__right-sidebar-container">
         <div class="layout__right-sidebar">
           <div class="trends-for-you">
             <div class="trends-for-you__block">
-              <div class="trends-for-you__heading"> Trends for you </div>
+              <div class="trends-for-you__heading"> Тренди для вас </div>
             </div>
+            {% block trending %}
             <div class="trends-for-you__block">
-              <div class="trends-for-you__meta-information"> Trending in Germany </div>
-              <div class="trends-for-you__trend-name"> #iPhone12 </div>
-              <div class="trends-for-you__meta-information"> 155k Tweets </div>
+              <div class="trends-for-you__meta-information"> Україна </div>
+              <div class="trends-for-you__trend-name"> #трембіта </div>
+              <div class="trends-for-you__meta-information"> багаааато октав </div>
             </div>
-            <div class="trends-for-you__block">
-              <div class="trends-for-you__meta-information"> Trending in Germany </div>
-              <div class="trends-for-you__trend-name"> #AmazonPrimeDay </div>
-            </div>
-            <div class="trends-for-you__block">
-              <div class="trends-for-you__meta-information"> Trending - Trending </div>
-              <div class="trends-for-you__trend-name"> #autos </div>
-              <div class="trends-for-you__meta-information"> 2,800 Tweets </div>
-            </div>
+            {% endblock trending %}
           </div>
           <div class="who-to-follow">
             <div class="who-to-follow__block">
-              <div class="who-to-follow__heading"> Who to follow </div>
+              <div class="who-to-follow__heading"> Користувачі </div>
             </div>
+            {% block whoToFollow %}
             <div class="who-to-follow__block">
-              <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/profile-image-1.jpg') }}" />
+              <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
               <div class="who-to-follow__content">
                 <div>
-                  <div class="who-to-follow__author-name"> Becki (& Chris) </div>
-                  <div class="who-to-follow__author-slug"> @beckiandchris </div>
+                  <div class="who-to-follow__author-name"> Трембіта </div>
+                  <div class="who-to-follow__author-slug"> @Trembita </div>
                 </div>
-                <div class="who-to-follow__button"> Follow </div>
+                <div class="who-to-follow__button"> Стежити </div>
               </div>
             </div>
-            <div class="who-to-follow__block">
-              <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/profile-image-2.png') }}" />
-              <div class="who-to-follow__content">
-                <div>
-                  <div class="who-to-follow__author-name"> Elixir Digest </div>
-                  <div class="who-to-follow__author-slug"> @elixirdigest </div>
-                </div>
-                <div class="who-to-follow__button"> Follow </div>
-              </div>
-            </div>
-            <div class="who-to-follow__block">
-              <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/profile-image-3.jpg') }}" />
-              <div class="who-to-follow__content">
-                <div>
-                  <div class="who-to-follow__author-name"> Chris Martin </div>
-                  <div class="who-to-follow__author-slug"> @chris_martin </div>
-                </div>
-                <div class="who-to-follow__button"> Follow </div>
-              </div>
-            </div>
+            {% endblock whoToFollow %}
           </div>
         </div>
       </div>
     </div>
   </body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Flask App</title>
-</head>
-<body>
-    {% block content %}{% endblock %}
-</body>
 </html>

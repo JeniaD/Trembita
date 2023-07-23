@@ -12,14 +12,13 @@
 }
 
 .sidebar-menu__item:hover {
-  background: rgba(29, 161, 242, 0.1);
-  color: #1da0f2;
+  background: #E1ECC8;
   border-radius: 20px;
   cursor: pointer;
 }
 
 .sidebar-menu__item--active {
-  color: #1da0f2;
+  color: black;
 }
 
 .sidebar-menu__item-icon {
@@ -28,7 +27,7 @@
 }
 
 .sidebar-menu__item--active .sidebar-menu__item-icon {
-  filter: invert(67%) sepia(60%) saturate(4956%) hue-rotate(176deg) brightness(95%) contrast(99%);
+  filter: invert(38%) sepia(38%) saturate(38%) hue-rotate(120deg) brightness(38%) contrast(38%);
 }
 
 
