@@ -5,9 +5,4 @@ app = Flask(__name__)
 app.config.from_pyfile("config.py")
 db = SQLAlchemy(app)
 
-# from app.models import InitRoles
-# with app.app_context():
-#     db.create_all()
-#     InitRoles()
-
 from app import routes, models
