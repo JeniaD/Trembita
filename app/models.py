@@ -9,19 +9,67 @@ user_roles = db.Table(
     db.Column("role_id", db.Integer, db.ForeignKey("role.id"))
 )
 
+# Association table for user subscribers (users subscribed to other users)
+user_subscribers = db.Table(
+    "user_subscribers",
+    db.Column("subscriber_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(20), unique=False, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+
+    email = db.Column(db.String(70), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
     active = db.Column(db.Boolean, default=True)
+    private = db.Column(db.Boolean, default=False)
     roles = db.relationship("Role", secondary=user_roles, backref=db.backref("users", lazy="dynamic"))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    about = db.Column(db.String(100))
     posts = db.relationship("Post", backref="author", lazy="dynamic")
+    # subscribers = db.relationship("User", backref="author", lazy="dynamic")
+    # subscribed = db.relationship("User", backref="subscriber", lazy="dynamic")
+
+    following = db.relationship(
+        "User",
+        secondary=user_subscribers,
+        primaryjoin=(user_subscribers.c.subscriber_id == id),
+        secondaryjoin=(user_subscribers.c.user_id == id),
+        backref=db.backref("subscribers", lazy="dynamic"),
+        lazy="dynamic"
+    )
+
+    followers = db.relationship(
+        "User",
+        secondary=user_subscribers,
+        primaryjoin=(user_subscribers.c.user_id == id),
+        secondaryjoin=(user_subscribers.c.subscriber_id == id),
+        backref=db.backref("followed", lazy="dynamic"),
+        lazy="dynamic"
+    )
 
     def __repr__(self):
         return f"<User {self.username}>"
+
+class Post(db.Model):
+    __tablename__ = "post"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    content = db.Column(db.String(100), nullable=False)
+    liked = db.relationship("User", backref="liker") # likes = db.Column(db.Integer, default=0)
+
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    userID = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __repr__(self):
+        return f"<Post {self.title}>"
 
 class Role(db.Model, RoleMixin):
     __tablename__ = "role"
@@ -33,24 +81,11 @@ class Role(db.Model, RoleMixin):
     def __repr__(self):
         return f"<Role {self.name}>"
 
-class Post(db.Model):
-    __tablename__ = "post"
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-
-    def __repr__(self):
-        return f"<Post {self.title}>"
-
 registered_user_role = Role(name="registeredUser", description="Registered User Role")
 admin_role = Role(name="admin", description="Admin Role")
 
 def InitRoles():
     roles = [
-        {"name": "guest", "description": "Guest Role"},
         {"name": "registeredUser", "description": "Registered User Role"},
         {"name": "admin", "description": "Admin Role"}
     ]
@@ -64,13 +99,3 @@ def InitRoles():
             db.session.add(role)
 
     db.session.commit()
-
-# class User(db.Model):
-#     __tablename__ = "users"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(100), nullable=False)
-#     email = db.Column(db.String(120), unique=True, nullable=False)
-
-#     def __repr__(self):
-#         return f"<User {self.username}>"

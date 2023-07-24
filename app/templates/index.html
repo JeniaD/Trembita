@@ -31,4 +31,16 @@
 {% endblock trending %}
 
 {% block whoToFollow %}
+    {% for user in users%}
+        <div class="who-to-follow__block">
+            <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+            <div class="who-to-follow__content">
+                <div>
+                    <div class="who-to-follow__author-name"> {{ user.name }} </div>
+                    <div class="who-to-follow__author-slug"> @{{ user.username }} </div>
+                </div>
+                <div class="who-to-follow__button"> Стежити </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock whoToFollow %}
