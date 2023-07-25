@@ -49,9 +49,9 @@
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" placeholder="Введіть свою електронну пошту">
   <br>
-  <label for="phone">Телефон:</label>
+  <!-- <label for="phone">Телефон:</label>
   <input type="tel" id="phone" name="phone" placeholder="Введіть номер телефону">
-  <br>
+  <br> -->
   <label for="password">Пароль:</label>
   <input type="password" id="password" name="password" placeholder="Введіть пароль">
   <br>
@@ -60,7 +60,19 @@
 {% endblock content %}
 
 {% block trending %}
+Будь ласка, увійдіть
 {% endblock trending %}
 
 {% block whoToFollow %}
+Будь ласка, увійдіть
 {% endblock whoToFollow %}
+
+{% block errorMessage %}
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <div class="notification is-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endwith %}
+{% endblock errorMessage %}

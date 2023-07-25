@@ -1,17 +1,11 @@
 from flask import render_template, Blueprint
 from app.models import User
+from flask_login import login_required, current_user
 
-main = Blueprint('main', __name__)
-
-@main.route("/profile")
-def Profile():
-    return render_template("profile.html")
-
-@main.route("/notifications")
-def Notifications():
-    return render_template("notifications.html")
+main = Blueprint("main", __name__)
 
 @main.route("/")
+@login_required
 def index():
     users = User.query.all()
-    return render_template("index.html", users=users)
+    return render_template("index.html", users=users[:5])

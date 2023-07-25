@@ -40,6 +40,9 @@
         </div>
       </div>
       <div class="layout__main">
+        <div class="error">
+          {% block errorMessage %}{% endblock errorMessage %}
+        </div>
         {% block content %}
           <h1>Вітаємо в Трембіті!</h1>
         {% endblock content %}     
