@@ -3,22 +3,22 @@
 {% block title %} Профіль {{ name }} - Трембіта {% endblock title %}
 
 {% block menu %}
-    <div class="sidebar-menu__item">
+    <div class="sidebar-menu__item" onclick="window.location.href='/home'">
         <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
     </div>
-    <div class="sidebar-menu__item">
+    <div class="sidebar-menu__item" onclick="window.location.href='/trending'">
         <img src="{{ url_for('static', filename='svg/explore.svg') }}" class="sidebar-menu__item-icon" /> Тренди
     </div>
-    <div class="sidebar-menu__item">
+    <div class="sidebar-menu__item" onclick="window.location.href='/notifications'">
         <img src="{{ url_for('static', filename='svg/notifications.svg') }}" class="sidebar-menu__item-icon" /> Сповіщення
     </div>
-    <div class="sidebar-menu__item">
+    <div class="sidebar-menu__item" onclick="window.location.href='/messages'">
         <img src="{{ url_for('static', filename='svg/messages.svg') }}" class="sidebar-menu__item-icon" /> Повідомлення
     </div>
-    <div class="sidebar-menu__item sidebar-menu__item--active">
+    <div class="sidebar-menu__item sidebar-menu__item--active" onclick="window.location.href='/profile'">
         <img src="{{ url_for('static', filename='svg/profile.svg') }}" class="sidebar-menu__item-icon" /> Профіль
     </div>
-    <div class="sidebar-menu__item">
+    <div class="sidebar-menu__item" onclick="window.location.href='/other'">
         <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
     </div>
 {% endblock menu %}
