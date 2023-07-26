@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Помилка - Трембіта {% endblock title %}
+
+{% block menu %}
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/explore.svg') }}" class="sidebar-menu__item-icon" /> Тренди
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/notifications.svg') }}" class="sidebar-menu__item-icon" /> Сповіщення
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/messages.svg') }}" class="sidebar-menu__item-icon" /> Повідомлення
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/profile.svg') }}" class="sidebar-menu__item-icon" /> Профіль
+</div>
+<div class="sidebar-menu__item">
+    <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
+</div>
+{% endblock menu %}
+
+{% block content %}
+<h1>Помилка</h1>
+<div>
+    {{ error }}
+</div>
+{% endblock content %}
+
+{% block trending %}
+{% endblock trending %}
+
+{% block whoToFollow %}
+    {% for user in users%}
+        <div class="who-to-follow__block">
+            <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+            <div class="who-to-follow__content">
+                <div>
+                    <div class="who-to-follow__author-name"> {{ user.name }} </div>
+                    <div class="who-to-follow__author-slug"> @{{ user.username }} </div>
+                </div>
+                <div class="who-to-follow__button"> Стежити </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock whoToFollow %}
