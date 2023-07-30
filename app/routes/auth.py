@@ -14,7 +14,7 @@ def CheckPassword(password): return len(password) > 0 and len(password) < 100
 @auth.route("/login", methods=["GET", "POST"])
 def Login():
     if request.method == "POST":
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         password = request.form.get("password")
 
         if not CheckUsername(username) or not CheckPassword(password):
@@ -35,7 +35,7 @@ def Login():
 def Register():
     if request.method == "POST":
         name = request.form.get("name")
-        username = request.form.get("username")
+        username = request.form.get("username").lower()
         email = request.form.get("email")
         password = request.form.get("password")
 
