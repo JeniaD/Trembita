@@ -17,8 +17,15 @@ def Notifications():
 
 user.route("/profile/<username>")
 def ShowProfile(username):
+    username = username.replace('@', '')
     user = User.query.filter_by(username=username).first()
     if not user: abort(404)
 
     if user.private: render_template("user.html", name=user.name, username=user.username, about=user.about, private=True)
     return render_template("user.html", name=user.name, username=user.username, about=user.about, posts=user.posts.all(), private=False)
+
+@login_required
+@user.route("/home")
+def Home():
+    users = User.query.all()
+    return render_template("index.html", recommendedUsers=users[:5])

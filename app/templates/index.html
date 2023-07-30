@@ -24,20 +24,53 @@
 {% endblock menu %}
 
 {% block content %}
-<h1>Вітаємо у Трембіті!</h1>
+    <h1>Вітаємо у Трембіті{% if current_user.is_authenticated %}, {{ current_user.name }}{% endif %}!</h1>
+
+    {% if current_user.is_authenticated %}
+    <div class="octave">
+        <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+        <div class="octave__main">
+            <div class="octave__header">
+                <div class="octave__author-name"> {{ current_user.name }} </div>
+                <div class="octave__author-slug"> @{{ current_user.username }} </div>
+            </div>
+            <div class="octave__content"><input/><button>Опублікувати</button></div>
+        </div>
+    </div>
+    {% endif %}
+    {% for octave in posts %}
+        <div class="octave">
+          <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+          <div class="octave__main">
+            <div class="octave__header">
+              <div class="octave__author-name"> Name </div>
+              <div class="octave__author-slug"> @nickname </div>
+              <div class="octave__publish-time">{{ octave.date }}</div>
+            </div>
+            <div class="octave__content">{{ octave.content }}</div>
+          </div>
+        </div>
+    {% endfor %}
 {% endblock content %}
 
 {% block trending %}
+    {% for trend in trending %}
+        <div class="trends-for-you__block">
+            <div class="trends-for-you__meta-information"> {{ trend.info }} </div>
+            <div class="trends-for-you__trend-name"> {{ trend.name }} </div>
+            <div class="trends-for-you__meta-information"> {{ trend.number }} </div>
+        </div>
+    {% endfor %}
 {% endblock trending %}
 
 {% block whoToFollow %}
-    {% for user in users%}
+    {% for rUser in recommendedUsers%}
         <div class="who-to-follow__block">
             <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
             <div class="who-to-follow__content">
                 <div>
-                    <div class="who-to-follow__author-name"> {{ user.name }} </div>
-                    <div class="who-to-follow__author-slug"> @{{ user.username }} </div>
+                    <div class="who-to-follow__author-name"><a href="/profile/{{ rUser.username }}"> {{ rUser.name }} </a></div>
+                    <div class="who-to-follow__author-slug"> @{{ rUser.username }} </div>
                 </div>
                 <div class="who-to-follow__button"> Стежити </div>
             </div>

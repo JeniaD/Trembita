@@ -27,7 +27,7 @@
     <h1>{{ name }}{% if private %}&#x1F512;{% endif %}</h1>
     <span>@{{ username }}</span>
     <br>
-    <div>{{ "" if not about else about }}</div><br><br>
+    <div>{{ about }}</div><br><br>
 
     {% for post in posts %}
         <div class="octave">
