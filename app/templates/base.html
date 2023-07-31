@@ -40,12 +40,16 @@
         </div>
       </div>
       <div class="layout__main">
+        <div class="error">
+          {% block errorMessage %}{% endblock errorMessage %}
+        </div>
         {% block content %}
           <h1>Вітаємо в Трембіті!</h1>
         {% endblock content %}     
       </div>
       <div class="layout__right-sidebar-container">
         <div class="layout__right-sidebar">
+          <br>
           <div class="trends-for-you">
             <div class="trends-for-you__block">
               <div class="trends-for-you__heading"> Тренди для вас </div>

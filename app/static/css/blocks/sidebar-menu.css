@@ -19,6 +19,9 @@
 
 .sidebar-menu__item--active {
   color: black;
+
+  background: #A0C49D;
+  border-radius: 20px;
 }
 
 .sidebar-menu__item-icon {

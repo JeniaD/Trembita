@@ -32,6 +32,11 @@
   font-weight: 700;
 }
 
+.who-to-follow__author-name a {
+  color: #14171a;
+  text-decoration: none;
+}
+
 .who-to-follow__content {
   display: flex;
   justify-content: space-between;
@@ -50,7 +55,7 @@
   font-size: 15px;
   font-weight: 700;
   border-radius: 15px;
-  padding: 5px;
+  padding: 8px;
   min-width: 67px;
   text-align: center;
 }
