@@ -18,13 +18,13 @@ def Login():
         password = request.form.get("password")
 
         if not CheckUsername(username) or not CheckPassword(password):
-            flash("Please fill out all fields")
+            flash("Будь ласка, заповніть всі поля")
             return redirect(url_for("auth.Login"))
 
         user = User.query.filter_by(username=username).first()
 
         if not user or not check_password_hash(user.password, password):
-            flash("Invalid credentials")
+            flash("Неправильний пароль або логін")
             return redirect(url_for("auth.Login"))
 
         login_user(user)
@@ -40,12 +40,12 @@ def Register():
         password = request.form.get("password")
 
         if not name or not username or not email or not password:
-            flash("Please fill out all fields")
+            flash("Будь ласка, заповніть всі поля")
             return redirect(url_for("auth.Register"))
 
         user = User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first()
         if user:
-            flash("User already exists. Please log in")
+            flash("Такий користувач вже існує. Будь ласка, увійдіть")
             return redirect(url_for("auth.Login"))
 
         userRole = Role.query.filter_by(name="registeredUser").first()

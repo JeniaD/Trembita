@@ -33,9 +33,6 @@ def create_app():
     from .models import User
     @loginManager.user_loader
     def LoadUser(userID): return User.query.get(int(userID))
-
-    # from flask import request
-    # @babel.localeselector
-    # def GetLocale(): return request.accept_languages.best_match(['en', 'uk'])
+    loginManager.login_message = "Будь ласка, увійдіть для перегляду сторінки"
     
     return app

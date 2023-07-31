@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, abort, flash, request, redirect, url_for, jsonify
+from flask import render_template, Blueprint, abort, request, jsonify
 from app.models import User, Post
 from flask_login import login_required, current_user
 from app import db
@@ -10,7 +10,7 @@ user = Blueprint("user", __name__)
 def Profile():
     return render_template("profile.html")
 
-@user.route("/trending") #trends
+@user.route("/trending")
 @login_required
 def Trends():
     return render_template("trends.html")
@@ -49,17 +49,11 @@ def Home():
 @user.route("/post", methods=["POST"])
 @login_required
 def MakePost():
-    content = request.json.get("content") # request.form.get("content")
+    content = request.json.get("content")
     if not content or len(content) > 100:
-        return jsonify({"message": "Content cannot be empty or longer than 100 characters"}), 400
-        # flash("Error: octave is too large")
-        # abort(422)
-        # return redirect(url_for("main.Home"))
+        return jsonify({"message": "Октава не може бути пуста або більше ніж 100 символів"}), 400
     
     post = Post(content=content, userID=current_user.id)
     db.session.add(post)
     db.session.commit()
-    return jsonify({"message": "Post created successfully"}), 201
-    # flash("Success!")
-    # return redirect(url_for("main.Home"))
-    # return jsonify({'message': 'Post created successfully'}), 200
+    return jsonify({"message": "Октава була опублікована"}), 201
