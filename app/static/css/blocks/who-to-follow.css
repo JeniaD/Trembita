@@ -32,7 +32,7 @@
   font-weight: 700;
 }
 
-.who-to-follow__author-name a /*::shadow*/ {
+.who-to-follow__author-name a {
   color: #14171a;
   text-decoration: none;
 }
