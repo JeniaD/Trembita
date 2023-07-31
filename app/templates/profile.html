@@ -24,18 +24,18 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{{ name }}{% if private %}&#x1F512;{% endif %}</h1>
-    <span>@{{ username }}</span>
+    <h1>{{ current_user.name }}{% if current_user.private %}&#x1F512;{% endif %}</h1>
+    <span>@{{ current_user.username }}</span>
     <br>
-    <div>{{ about }}</div><br><br>
+    <div>{{ current_user.about }}</div><br><br>
 
-    {% for post in posts %}
+    {% for post in current_user.posts.all() %}
         <div class="octave">
           <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
           <div class="octave__main">
             <div class="octave__header">
-              <div class="octave__author-name"> {{ name }} </div>
-              <div class="octave__author-slug"> @{{ username }} </div>
+              <div class="octave__author-name"> {{ current_user.name }} </div>
+              <div class="octave__author-slug"> @{{ current_user.username }} </div>
               <div class="octave__publish-time"> {{ post.date.strftime("%b %d, %Y") }} </div>
             </div>
             <div class="octave__content">
@@ -44,13 +44,15 @@
           </div>
         </div>
     {% endfor %}
+
+    <br><a href="/logout" style="text-decoration: none; color: brown;">Вийти</a>
 {% endblock content %}
 
 {% block trending %}
 {% endblock trending %}
 
 {% block whoToFollow %}
-    {% for user in users %}
+    {% for user in recommendedUsers %}
         <div class="who-to-follow__block">
             <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
             <div class="who-to-follow__content">

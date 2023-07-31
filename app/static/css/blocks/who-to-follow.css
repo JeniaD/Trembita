@@ -32,6 +32,11 @@
   font-weight: 700;
 }
 
+.who-to-follow__author-name a /*::shadow*/ {
+  color: #14171a;
+  text-decoration: none;
+}
+
 .who-to-follow__content {
   display: flex;
   justify-content: space-between;

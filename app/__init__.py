@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_babel import Babel
 
 db = SQLAlchemy()
 
@@ -26,8 +27,15 @@ def create_app():
     loginManager.login_view = "auth.Login"
     loginManager.init_app(app)
 
+    # Initialize Babel
+    babel = Babel(app)
+
     from .models import User
     @loginManager.user_loader
     def LoadUser(userID): return User.query.get(int(userID))
+
+    # from flask import request
+    # @babel.localeselector
+    # def GetLocale(): return request.accept_languages.best_match(['en', 'uk'])
     
     return app

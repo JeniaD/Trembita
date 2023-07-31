@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
     roles = db.relationship("Role", secondary=user_roles, backref=db.backref("users", lazy="dynamic"))
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
-    about = db.Column(db.String(100))
+    about = db.Column(db.String(100), default="")
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     # subscribers = db.relationship("User", backref="author", lazy="dynamic")
     # subscribed = db.relationship("User", backref="subscriber", lazy="dynamic")
@@ -45,14 +45,14 @@ class User(db.Model, UserMixin):
         lazy="dynamic"
     )
 
-    followers = db.relationship(
-        "User",
-        secondary=user_subscribers,
-        primaryjoin=(user_subscribers.c.user_id == id),
-        secondaryjoin=(user_subscribers.c.subscriber_id == id),
-        backref=db.backref("followed", lazy="dynamic"),
-        lazy="dynamic"
-    )
+    # followers = db.relationship(
+    #     "User",
+    #     secondary=user_subscribers,
+    #     primaryjoin=(user_subscribers.c.user_id == id),
+    #     secondaryjoin=(user_subscribers.c.subscriber_id == id),
+    #     backref=db.backref("followed", lazy="dynamic"),
+    #     lazy="dynamic"
+    # )
 
     def __repr__(self):
         return f"<User {self.username}>"
