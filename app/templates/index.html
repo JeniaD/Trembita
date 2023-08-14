@@ -80,7 +80,7 @@
     {% for octave in posts %}
         <div class="octave">
             <a href="/profile/{{octave.author.username}}">
-                <img class="octave__author-logo" src="{{ url_for('static', filename='img/users/user-icon_'~octave.author.id~'.jpg') }}" />
+                <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=octave.author.id) }}" />
             </a>
             <div class="octave__main">
                 <div class="octave__header">
@@ -111,7 +111,7 @@
 {% block whoToFollow %}
     {% for rUser in recommendedUsers%}
         <div class="who-to-follow__block">
-            <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/users/user-icon_'~octave.author.id~'.jpg') }}" />
+            <img class="who-to-follow__author-logo" src="{{ url_for('main.UploadedAvatar', filename=rUser.id) }}" />
             <div class="who-to-follow__content">
                 <div>
                     <div class="who-to-follow__author-name"><a href="/profile/{{ rUser.username }}"> {{ rUser.name }} </a></div>

@@ -9,6 +9,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_pyfile("config.py")
 
+    import os
+    app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+
     # Initialize database
     db.init_app(app)
 

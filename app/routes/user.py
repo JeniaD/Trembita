@@ -1,13 +1,24 @@
-from flask import render_template, Blueprint, abort, request, jsonify, redirect, url_for
+from flask import render_template, Blueprint, abort, request, jsonify, redirect, url_for, current_app
 from app.models import User, Post
 from flask_login import login_required, current_user
 from app import db
+import os
 
 user = Blueprint("user", __name__)
 
-@user.route("/profile")
+@user.route("/profile", methods=["GET", "POST"])
 @login_required
 def Profile():
+    if request.method == "POST":
+        name = request.form["name"]
+        username = request.form["username"]
+        about = request.form["about"]
+        avatar = request.files["avatar"]
+
+        if avatar: avatar.save(os.path.join(current_app.config["UPLOAD_FOLDER"], f"avatars/{ current_user.id }.jpg"))
+
+        return redirect(url_for("user.Profile"))
+
     return render_template("profile.html")
 
 @user.route("/trending")

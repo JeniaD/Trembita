@@ -29,9 +29,22 @@
     <br>
     <div>{{ current_user.about }}</div><br><br>
 
+    <hr>
+    <h3>Редагувати профіль</h3>
+    <form action="/profile" method="post" enctype="multipart/form-data" autocomplete="off">
+        <input type="text" id="name" name="name" value="{{ current_user.name }}">
+        <input type="text" id="username" name="username" value="{{ current_user.username }}">
+        <textarea id="about" name="about" rows="4" cols="50">{{ current_user.about }}</textarea>
+        <input type="file" id="avatar" name="avatar" accept="image/*">
+
+        <input type="submit" value="Зберегти">
+    </form>
+    <hr>
+
+    <h3>Октави</h3>
     {% for post in current_user.posts.all() %}
         <div class="octave">
-          <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+          <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" />
           <div class="octave__main">
             <div class="octave__header">
               <div class="octave__author-name"> {{ current_user.name }} </div>
