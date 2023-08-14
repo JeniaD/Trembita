@@ -79,15 +79,17 @@
     {% endif %}
     {% for octave in posts %}
         <div class="octave">
-          <a href="/profile/{{octave.author.username}}"><img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" /></a>
-          <div class="octave__main">
-            <div class="octave__header">
-              <div class="octave__author-name"> {{ octave.author.name }} </div>
-              <div class="octave__author-slug"> @{{ octave.author.username }} </div>
-              <div class="octave__publish-time">{{ octave.date.strftime("%d.%m.%Y %H:%M:%S") }}</div>
+            <a href="/profile/{{octave.author.username}}">
+                <img class="octave__author-logo" src="{{ url_for('static', filename='img/users/user-icon_'~octave.author.id~'.jpg') }}" />
+            </a>
+            <div class="octave__main">
+                <div class="octave__header">
+                    <div class="octave__author-name"> {{ octave.author.name }} </div>
+                    <div class="octave__author-slug"> @{{ octave.author.username }} </div>
+                    <div class="octave__publish-time">{{ octave.date.strftime("%d.%m.%Y %H:%M:%S") }}</div>
+                </div>
+                <div class="octave__content">{{ octave.content }}</div>
             </div>
-            <div class="octave__content">{{ octave.content }}</div>
-          </div>
         </div>
     {% endfor %}
 {% endblock content %}
@@ -109,7 +111,7 @@
 {% block whoToFollow %}
     {% for rUser in recommendedUsers%}
         <div class="who-to-follow__block">
-            <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+            <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/users/user-icon_'~octave.author.id~'.jpg') }}" />
             <div class="who-to-follow__content">
                 <div>
                     <div class="who-to-follow__author-name"><a href="/profile/{{ rUser.username }}"> {{ rUser.name }} </a></div>

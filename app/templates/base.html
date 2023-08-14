@@ -82,5 +82,16 @@
         </div>
       </div>
     </div>
+
+    <script type="text/javascript">
+      const avatars = document.querySelectorAll('[class*="author-logo"]');
+      // const avatars = document.querySelectorAll(".octave__author-logo");
+
+      avatars.forEach(function(elem){
+        elem.addEventListener("error", function(){
+          this.src = "{{ url_for('static', filename='img/user-icon.png') }}";
+        })
+      })
+    </script>
   </body>
 </html>
