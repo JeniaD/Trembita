@@ -24,10 +24,10 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{{ name }}</h1>
+    <h1>{{ name }}{% if current_user.private %}&#x1F512;{% endif %}</h1>
     <span>@{{ username }}</span>
     <br>
-    <div>{{ "" if not about else about }}</div><br><br>
+    <div>{{ about }}</div><br><br>
 
     {% if not private %}
         {% for post in posts %}

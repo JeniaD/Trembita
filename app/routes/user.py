@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, abort, request, jsonify
+from flask import render_template, Blueprint, abort, request, jsonify, redirect, url_for
 from app.models import User, Post
 from flask_login import login_required, current_user
 from app import db
@@ -30,9 +30,12 @@ def Messages():
 def Other():
     return render_template("other.html")
 
-user.route("/profile/<username>")
+@user.route("/profile/<username>")
 def ShowProfile(username):
     username = username.replace('@', '')
+
+    if current_user.is_authenticated and current_user.username == username: return redirect(url_for("user.Profile"))
+
     user = User.query.filter_by(username=username).first()
     if not user: abort(404)
 

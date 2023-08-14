@@ -79,7 +79,7 @@
     {% endif %}
     {% for octave in posts %}
         <div class="octave">
-          <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+          <a href="/profile/{{octave.author.username}}"><img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" /></a>
           <div class="octave__main">
             <div class="octave__header">
               <div class="octave__author-name"> {{ octave.author.name }} </div>
