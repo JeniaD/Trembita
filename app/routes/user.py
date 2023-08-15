@@ -15,7 +15,12 @@ def Profile():
         about = request.form["about"]
         avatar = request.files["avatar"]
 
+        if name: current_user.name = name
+        if username: current_user.username = username
+        if about: current_user.about = about
         if avatar: avatar.save(os.path.join(current_app.config["UPLOAD_FOLDER"], f"avatars/{ current_user.id }.jpg"))
+
+        db.session.commit()
 
         return redirect(url_for("user.Profile"))
 
