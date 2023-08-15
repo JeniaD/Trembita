@@ -28,7 +28,7 @@
 
     {% if current_user.is_authenticated %}
     <div class="octave">
-        <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
+        <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" />
         <div class="octave__main">
             <div class="octave__header">
                 <div class="octave__author-name"> {{ current_user.name }} </div>
