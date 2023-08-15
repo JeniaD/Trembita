@@ -4,5 +4,4 @@ venv
 __pycache__
 .backup
 instance
-user_uploads/*
-!user_uploads/*/
+uploads
