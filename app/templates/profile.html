@@ -2,6 +2,8 @@
 
 {% block title %} Профіль {{ name }} - Трембіта {% endblock title %}
 
+{% block links %} <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}"> {% endblock links %}
+
 {% block menu %}
     <div class="sidebar-menu__item" onclick="window.location.href='/home'">
         <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
@@ -24,10 +26,15 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{{ current_user.name }}{% if current_user.private %}&#x1F512;{% endif %}</h1>
-    <span>@{{ current_user.username }}</span>
-    <br>
-    <div>{{ current_user.about }}</div><br><br>
+    <div class="profile-details">
+        <div class="profile-header">
+            <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" />
+            <h1>{{ current_user.name }}{% if current_user.private %}&#x1F512;{% endif %}</h1>
+            <span>@{{ current_user.username }}</span> <span>{{ current_user.date.strftime("%b %d, %Y") }}</span>
+        </div>
+        <br>
+        <div>{{ current_user.about }}</div><br><br>
+    </div>
 
     <hr>
     <h3>Редагувати профіль</h3>
@@ -42,7 +49,7 @@
     <hr>
 
     <h3>Октави</h3>
-    {% for post in current_user.posts.all() %}
+    {% for post in current_user.posts.all() | sort(attribute="date", reverse=True) %}
         <div class="octave">
           <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" />
           <div class="octave__main">

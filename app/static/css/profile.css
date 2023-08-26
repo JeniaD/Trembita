@@ -1,0 +1,17 @@
+.profile-header .octave__author-logo {
+    width: 23%;
+    height: 23%;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-details {
+    padding: 20px;
+    margin: 10px;
+    background-color: #a198829a;
+    border-radius: 1%;
+}
+
+.profile-header {
+    border-radius: 1%;
+}
