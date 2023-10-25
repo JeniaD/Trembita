@@ -24,6 +24,7 @@
 {% endblock menu %}
 
 {% block content %}
+    <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=user.id) }}" />
     <h1>{{ user.name }}{% if user.private %}&#x1F512;{% endif %}</h1>
     <span>@{{ user.username }}</span>
     <br>
