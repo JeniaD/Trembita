@@ -24,10 +24,11 @@
 {% endblock menu %}
 
 {% block content %}
-    <h1>{{ name }}{% if current_user.private %}&#x1F512;{% endif %}</h1>
-    <span>@{{ username }}</span>
+    <h1>{{ user.name }}{% if user.private %}&#x1F512;{% endif %}</h1>
+    <span>@{{ user.username }}</span>
     <br>
-    <div>{{ about }}</div><br><br>
+    <div>{{ user.about }}</div><br>
+    <div>{{ user.followers.count() }} стежать, {{ user.following.count() }} стежить</div><br>
 
     {% if not private %}
         {% for post in posts %}
@@ -35,8 +36,8 @@
                 <img class="octave__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
                 <div class="octave__main">
                     <div class="octave__header">
-                    <div class="octave__author-name"> {{ name }} </div>
-                    <div class="octave__author-slug"> @{{ username }} </div>
+                    <div class="octave__author-name"> {{ user.name }} </div>
+                    <div class="octave__author-slug"> @{{ user.username }} </div>
                     <div class="octave__publish-time"> {{ post.date.strftime("%b %d, %Y") }} </div>
                     </div>
                     <div class="octave__content">

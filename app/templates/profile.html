@@ -33,7 +33,8 @@
             <span>@{{ current_user.username }}</span> <span>{{ current_user.date.strftime("%b %d, %Y") }}</span>
         </div>
         <br>
-        <div>{{ current_user.about }}</div><br><br>
+        <div>{{ current_user.about }}</div><br>
+        <div>{{ current_user.followers.count() }} стежать, {{ current_user.following.count() }} стежить</div><br>
     </div>
 
     <hr>

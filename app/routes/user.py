@@ -55,8 +55,9 @@ def ShowProfile(username):
     user = User.query.filter_by(username=username).first()
     if not user: abort(404)
 
-    if user.private: render_template("user.html", name=user.name, username=user.username, about=user.about, private=True)
-    return render_template("user.html", name=user.name, username=user.username, about=user.about, posts=user.posts.all(), private=False)
+    return render_template("user.html", user=user, posts=user.posts.all())
+    # if user.private: render_template("user.html", name=user.name, username=user.username, about=user.about, private=True)
+    # return render_template("user.html", name=user.name, username=user.username, about=user.about, posts=user.posts.all(), private=False)
 
 @user.route("/home")
 @login_required
