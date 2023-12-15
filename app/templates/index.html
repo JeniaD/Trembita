@@ -35,7 +35,7 @@
                 <div class="octave__author-slug"> @{{ current_user.username }} </div>
             </div>
             <div class="octave__content">
-                <form id="postForm" method="post">
+                <form id="postForm" method="post" action="/post" onsubmit="createPost(); return false;">
                     <input type="text" name="content" placeholder="Напишіть октаву...">
                     <button type="button" onclick="createPost()">Відправити</button>
                 </form>

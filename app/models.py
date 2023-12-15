@@ -42,6 +42,24 @@ class User(db.Model, UserMixin):
                                     secondaryjoin=(id == subscriptions.c.followed_id),
                                     backref=db.backref("followed", lazy="dynamic"),
                                     lazy="dynamic")
+    
+    def Subscribe(self, user):
+        if not self.IsSubscribed(user):
+            self.following.append(user)
+            return self
+    
+    def Unsubscribe(self, user):
+        if self.IsSubscribed(user):
+            self.following.remove(user)
+            return self
+    
+    def IsSubscribed(self, user):
+        return self.following.filter(subscriptions.c.followed_id == user.id).count() > 0 #follower_id
+    
+    def ClearSubscribers(self):
+        for user in self.following:
+            self.Unsubscribe(user)
+        db.session.commit()
 
     def __repr__(self):
         return f"<User {self.username}>"

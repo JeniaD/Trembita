@@ -27,6 +27,89 @@
     <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=user.id) }}" />
     <h1>{{ user.name }}{% if user.private %}&#x1F512;{% endif %}</h1>
     <span>@{{ user.username }}</span>
+    {% if current_user.is_authenticated %}
+        {% if current_user.IsSubscribed(user) %}
+            <button id="subscribeButton">Відписатись</button>
+        {% else %}
+            <button id="subscribeButton">Підписатись</button>
+        {% endif %}
+
+        <script>
+            const subscribeButton = document.getElementById('subscribeButton');
+            // const unsubscribeButton = document.getElementById('unsubscribeButton');
+            
+            if (subscribeButton) {
+                subscribeButton.addEventListener('click', function() {
+                    const userID = {{ user.id }};
+                    fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ userID: userID })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response as needed
+                        console.log(data.message);
+                    });
+                });
+            }
+        
+            // if (unsubscribeButton) {
+            //     unsubscribeButton.addEventListener('click', function() {
+            //         const userId = /* get the user ID */;
+            //         fetch('/unsubscribe', {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //             body: JSON.stringify({ user_id: userId })
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             // Handle the response as needed
+            //             console.log(data.message);
+            //         });
+            //     });
+            // }
+        </script>
+
+        <!-- <form id="subscriptionForm" method="post">
+            <input type="hidden" id="targetUsername" value="{{ user.username }}">
+            <button id="subscribeButton" onclick="Subscribe()">{% if current_user.IsSubscribed(user) %} Відписатись {% else %} Підписатись {% endif %}</button>
+        <!-- </form> -->
+        <!-- <script>
+            function Subscribe() {
+                const target = document.getElementById("targetUsername").value;
+                if (!target) { return; }
+
+                const data = {
+                    username: target
+                };
+
+                // Make the AJAX POST request
+                fetch("/subscribe", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message); //alert(data.message); // Display the response from the server
+                    document.getElementById("postForm").reset(); // Clear the form
+
+                    location.reload(); // Warning: this is not correct
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Помилка: " + error);
+                });
+            }
+        </script> -->
+    {% endif %}
     <br>
     <div>{{ user.about }}</div><br>
     <div>{{ user.followers.count() }} стежать, {{ user.following.count() }} стежить</div><br>
