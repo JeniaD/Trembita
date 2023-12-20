@@ -21,7 +21,9 @@ pip3 install -r requirements.txt
 ```
 4. Запустіть застосунок
 ```
-flask run
+flask run # Звичайний запуск
+
+flask run --host=0.0.0.0 --debug # Режим тестування і налагодження
 ```
 
 ## Прогрес
