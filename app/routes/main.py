@@ -24,4 +24,5 @@ def UploadedFile(filename):
 @main.route("/")
 def index():
     if current_user.is_authenticated: return redirect(url_for("user.Home"))
-    return render_template("index.html", posts=Post.query.order_by(Post.date.desc()).all())
+    return redirect(url_for("auth.Login"))
+    # render_template("index.html", posts=Post.query.order_by(Post.date.desc()).all())

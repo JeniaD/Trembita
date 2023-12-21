@@ -2,52 +2,134 @@
 
 {% block title %} Головна - Трембіта {% endblock title %}
 
-{% block menu %}
-<div class="sidebar-menu__item sidebar-menu__item--active" onclick="window.location.href='/home'">
-    <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
-</div>
-<div class="sidebar-menu__item" onclick="window.location.href='/trending'">
-    <img src="{{ url_for('static', filename='svg/explore.svg') }}" class="sidebar-menu__item-icon" /> Тренди
-</div>
-<div class="sidebar-menu__item" onclick="window.location.href='/notifications'">
-    <img src="{{ url_for('static', filename='svg/notifications.svg') }}" class="sidebar-menu__item-icon" /> Сповіщення
-</div>
-<div class="sidebar-menu__item" onclick="window.location.href='/messages'">
-    <img src="{{ url_for('static', filename='svg/messages.svg') }}" class="sidebar-menu__item-icon" /> Повідомлення
-</div>
-<div class="sidebar-menu__item" onclick="window.location.href='/profile'">
-    <img src="{{ url_for('static', filename='svg/profile.svg') }}" class="sidebar-menu__item-icon" /> Профіль
-</div>
-<div class="sidebar-menu__item" onclick="window.location.href='/other'">
-    <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
-</div>
-{% endblock menu %}
+{% block navbarLinks %}
+<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+<a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Trembita</a>
+<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
+<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
+{% endblock navbarLinks %}
 
-{% block content %}
-    <h1>Вітаємо у Трембіті{% if current_user.is_authenticated %}, {{ current_user.name }}{% endif %}!</h1>
+{% block navbarNotifications %}
+{% endblock navbarNotifications %}
 
+{% block notificationsCount %}{% endblock notificationsCount %}
+
+{% block navbarAvatar %}
     {% if current_user.is_authenticated %}
-    <div class="octave">
-        <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" />
-        <div class="octave__main">
-            <div class="octave__header">
-                <div class="octave__author-name"> {{ current_user.name }} </div>
-                <div class="octave__author-slug"> @{{ current_user.username }} </div>
-            </div>
-            <div class="octave__content">
-                <form id="postForm" method="post" action="/post" onsubmit="createPost(); return false;">
-                    <input type="text" name="content" placeholder="Напишіть октаву...">
-                    <button type="button" onclick="createPost()">Відправити</button>
-                </form>
+    <img src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+    {% endif %}
+{% endblock navbarAvatar %}
+
+{% block mobileNavbar %}
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+</div>
+{% endblock mobileNavbar %}
+
+{% block profile %}
+    {% if current_user.is_authenticated %}
+    <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+            <h4 class="w3-center">Мій профіль</h4>
+            <p class="w3-center"><img src="{{ url_for('main.UploadedAvatar', filename=current_user.id) }}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+            <h3>{{ current_user.name }}</h3>
+            <p>@{{ current_user.username }}</p>
+            <hr>
+            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Перша українська соцмережа</p>
+        </div>
+    </div>
+    {% endif %}
+{% endblock profile %}
+
+{% block sideMenu %}
+<button class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Мій профіль</button>
+<button class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>Сповіщення</button>
+<button class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>Мессенджер</button>
+{% endblock sideMenu %}
+
+{% block interests %}
+<div class="w3-card w3-round w3-white w3-hide-small">
+    <div class="w3-container">
+        <p>Інтереси</p>
+        <p>
+            <span class="w3-tag w3-small w3-theme-d5">Новини</span>
+            <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
+            <span class="w3-tag w3-small w3-theme-d3">Спорт</span>
+            <span class="w3-tag w3-small w3-theme-d2">Ігри</span>
+            <span class="w3-tag w3-small w3-theme-d1">Спілкування</span>
+            <span class="w3-tag w3-small w3-theme">Дизайн</span>
+            <span class="w3-tag w3-small w3-theme-l1">Арт</span>
+            <span class="w3-tag w3-small w3-theme-l2">Програмування</span>
+            <span class="w3-tag w3-small w3-theme-l3">Література</span>
+            <span class="w3-tag w3-small w3-theme-l4">Малювання</span>
+            <span class="w3-tag w3-small w3-theme-l5">Навчання</span>
+        </p>
+    </div>
+</div>
+{% endblock interests %}
+
+{% block alertBox %}
+<div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+    <i class="fa fa-remove"></i>
+    </span>
+    <p><strong>Агов!</strong></p>
+    <p>Це лише можливий варіант дизайну</p>
+</div>
+{% endblock alertBox %}
+
+{% block writeOctave %}
+    {% if current_user.is_authenticated %}
+    <div class="w3-row-padding">
+        <div class="w3-col m12">
+            <div class="w3-card w3-round w3-white">
+                <div class="w3-container w3-padding">
+                    <h6 class="w3-opacity">Напишіть свою октаву</h6>
+                    <form id="postForm" method="post" action="/post" onsubmit="createPost(); return false;">
+                        <input type="text" name="content" class="w3-border w3-padding" placeholder="Що нового?">
+                        <button type="button" class="w3-button w3-theme" onclick="createPost()"><i class="fa fa-pencil"></i> Опублікувати</button>
+                    </form>
+                    <!-- <p contenteditable="true" class="w3-border w3-padding">Що нового?</p> -->
+                    <!-- <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> Опублікувати</button>  -->
+                </div>
             </div>
         </div>
     </div>
+    {% endif %}
+{% endblock writeOctave %}
 
+{% block posts %}
+    {% for octave in posts %}
+    <div class="w3-container w3-card w3-white w3-round w3-margin octave">
+        <br>
+        <img src="{{ url_for('main.UploadedAvatar', filename=octave.author.id) }}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{ octave.date.strftime("%d.%m.%Y %H:%M:%S") }}</span>
+        <h4><a href="/profile/{{octave.author.username}}">{{ octave.author.name }}</a></h4>@{{ octave.author.username }}<br>
+        <p>{{ octave.content }}</p>
+        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Лайк (0)</button> 
+        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Прокоментувати (0)</button> 
+    </div>
+    {% endfor %}
+{% endblock posts %}
+
+{% block footer %}
+<!--footer class="w3-container w3-theme-d3 w3-padding-16">
+    <h5>Footer</h5>
+</footer-->
+<footer class="w3-container w3-theme-d5">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+    {% if current_user.is_authenticated %}
     <script>
         function createPost() {
             const content = document.querySelector('input[name="content"]').value;
             if (!content) {
-                alert("Октава пуста... :(");
+                alert("Октава пуста");
                 return;
             }
 
@@ -77,48 +159,4 @@
         }
     </script>
     {% endif %}
-    {% for octave in posts %}
-        <div class="octave">
-            <a href="/profile/{{octave.author.username}}">
-                <img class="octave__author-logo" src="{{ url_for('main.UploadedAvatar', filename=octave.author.id) }}" />
-            </a>
-            <div class="octave__main">
-                <div class="octave__header">
-                    <div class="octave__author-name"> {{ octave.author.name }} </div>
-                    <div class="octave__author-slug"> @{{ octave.author.username }} </div>
-                    <div class="octave__publish-time">{{ octave.date.strftime("%d.%m.%Y %H:%M:%S") }}</div>
-                </div>
-                <div class="octave__content">{{ octave.content }}</div>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock content %}
-
-{% block trending %}
-    <div class="trends-for-you__block">
-        <div class="trends-for-you__meta-information"> Україна </div>
-        <div class="trends-for-you__trend-name"> #Трембіта </div>
-    </div>
-    {% for trend in trending %}
-        <div class="trends-for-you__block">
-            <div class="trends-for-you__meta-information"> {{ trend.info }} </div>
-            <div class="trends-for-you__trend-name"> {{ trend.name }} </div>
-            <div class="trends-for-you__meta-information"> {{ trend.number }} </div>
-        </div>
-    {% endfor %}
-{% endblock trending %}
-
-{% block whoToFollow %}
-    {% for rUser in recommendedUsers%}
-        <div class="who-to-follow__block">
-            <img class="who-to-follow__author-logo" src="{{ url_for('main.UploadedAvatar', filename=rUser.id) }}" />
-            <div class="who-to-follow__content">
-                <div>
-                    <div class="who-to-follow__author-name"><a href="/profile/{{ rUser.username }}"> {{ rUser.name }} </a></div>
-                    <div class="who-to-follow__author-slug"> @{{ rUser.username }} </div>
-                </div>
-                <div class="who-to-follow__button"> Стежити </div>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock whoToFollow %}
+{% endblock footer %}

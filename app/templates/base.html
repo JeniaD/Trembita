@@ -1,101 +1,280 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>{% block title %} Трембіта {% endblock title %}</title>
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %} Трембіта {% endblock title %}</title>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/layout.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/brand.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/sidebar-menu.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/octave.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/trends-for-you.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks/who-to-follow.css') }}" />
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block links %}{% endblock links%}
-  </head>
-  <body>
-    <div class="layout">
-      <div class="layout__left-sidebar">
-        <img src="{{ url_for('static', filename='img/Trembita.png') }}" class="brand" />
-        <div class="sidebar-menu">
-          {% block menu %}
-          <div class="sidebar-menu__item"> <!--sidebar-menu__item--active-->
-            <img src="{{ url_for('static', filename='svg/home.svg') }}" class="sidebar-menu__item-icon" /> Головна
-          </div>
-          <div class="sidebar-menu__item">
-            <img src="{{ url_for('static', filename='svg/explore.svg') }}" class="sidebar-menu__item-icon" /> Тренди
-          </div>
-          <div class="sidebar-menu__item">
-            <img src="{{ url_for('static', filename='svg/notifications.svg') }}" class="sidebar-menu__item-icon" /> Сповіщення
-          </div>
-          <div class="sidebar-menu__item">
-            <img src="{{ url_for('static', filename='svg/messages.svg') }}" class="sidebar-menu__item-icon" /> Повідомлення
-          </div>
-          <div class="sidebar-menu__item">
-            <img src="{{ url_for('static', filename='svg/profile.svg') }}" class="sidebar-menu__item-icon" /> Профіль
-          </div>
-          <div class="sidebar-menu__item">
-            <img src="{{ url_for('static', filename='svg/more.svg') }}" class="sidebar-menu__item-icon" /> Інше
-          </div>
-          {% endblock menu %}
-        </div>
-      </div>
-      <div class="layout__main">
-        <div class="error">
-          {% block errorMessage %}{% endblock errorMessage %}
-        </div>
-        {% block content %}
-          <h1>Вітаємо в Трембіті!</h1>
-        {% endblock content %}     
-      </div>
-      <div class="layout__right-sidebar-container">
-        <div class="layout__right-sidebar">
-          <br>
-          <div class="trends-for-you">
-            <div class="trends-for-you__block">
-              <div class="trends-for-you__heading"> Тренди для вас </div>
-            </div>
-            {% block trending %}
-            <div class="trends-for-you__block">
-              <div class="trends-for-you__meta-information"> Україна </div>
-              <div class="trends-for-you__trend-name"> #трембіта </div>
-              <div class="trends-for-you__meta-information"> багаааато октав </div>
-            </div>
-            {% endblock trending %}
-          </div>
-          <div class="who-to-follow">
-            <div class="who-to-follow__block">
-              <div class="who-to-follow__heading"> Користувачі </div>
-            </div>
-            {% block whoToFollow %}
-            <div class="who-to-follow__block">
-              <img class="who-to-follow__author-logo" src="{{ url_for('static', filename='img/user-icon.png') }}" />
-              <div class="who-to-follow__content">
-                <div>
-                  <div class="who-to-follow__author-name"> Трембіта </div>
-                  <div class="who-to-follow__author-slug"> @Trembita </div>
-                </div>
-                <div class="who-to-follow__button"> Стежити </div>
-              </div>
-            </div>
-            {% endblock whoToFollow %}
-          </div>
-        </div>
-      </div>
-    </div>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/whiteTheme.css') }}">
+		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+			html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+			.octave h4 {margin: 0}
+			.octave h4 a {text-decoration: none}
+		</style>
+	</head>
+	<body class="w3-theme-l5">
+		{% block navbar %}
+		<div class="w3-top">
+			<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+				{% block navbarLinks %}
+				<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+				<a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Trembita</a>
+				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
+				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
+				{% endblock navbarLinks %}
+				<div class="w3-dropdown-hover w3-hide-small">
+					<button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">{% block notificationsCount %}{% endblock notificationsCount %}</span></button>
+					<div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+						{% block navbarNotifications %}
+						<a href="#" class="w3-bar-item w3-button">One new friend request</a>
+						<a href="#" class="w3-bar-item w3-button">John Doe posted on your wall</a>
+						<a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
+						{% endblock navbarNotifications %}
+					</div>
+				</div>
+				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+					{% block navbarAvatar %}
+					<img src="./Trembita.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					{% endblock navbarAvatar %}
+				</a>
+			</div>
+		</div>
+		{% endblock navbar %}
+		{% block mobileNavbar %}
+		<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+		</div>
+		{% endblock mobileNavbar %}
+		<!-- Page Container -->
+		<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+			<!-- The Grid -->
+			<div class="w3-row">
+				<!-- Left Column -->
+				{% block leftColumn %}
+				<div class="w3-col m3">
+					<!-- Profile -->
+					{% block profile %}
+					<div class="w3-card w3-round w3-white">
+						<div class="w3-container">
+							<h4 class="w3-center">Мій профіль</h4>
+							<p class="w3-center"><img src="./Trembita.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+							<h3>Трембіта</h3>
+							<hr>
+							<p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Перша українська соцмережа</p>
+							<!--<p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>-->
+							<!--<p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>-->
+						</div>
+					</div>
+					{% endblock profile %}
+					<br>
+					<!-- Accordion -->
+					{% block accordion %}
+					<div class="w3-card w3-round">
+						<div class="w3-white">
+							{% block sideMenu %}
+							<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Мій профіль</button>
+							<div id="Demo1" class="w3-hide w3-container">
+								<p>Some text..</p>
+							</div>
+							<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>Сповіщення</button>
+							<div id="Demo2" class="w3-hide w3-container">
+								<p>Some other text..</p>
+							</div>
+							<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>Мессенджер</button>
+							<div id="Demo3" class="w3-hide w3-container">
+								<div class="w3-row-padding">
+									<br>
+									<div class="w3-half">
+										<img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+									<div class="w3-half">
+										<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+									<div class="w3-half">
+										<img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+									<div class="w3-half">
+										<img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+									<div class="w3-half">
+										<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+									<div class="w3-half">
+										<img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
+									</div>
+								</div>
+							</div>
+							{% endblock sideMenu %}
+						</div>
+					</div>
+					{% endblock accordion %}
+					<br>
+					<!-- Interests --> 
+					{% block interests %}
+					<div class="w3-card w3-round w3-white w3-hide-small">
+						<div class="w3-container">
+							<p>Інтереси</p>
+							<p>
+								<span class="w3-tag w3-small w3-theme-d5">Новини</span>
+								<span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
+								<span class="w3-tag w3-small w3-theme-d3">Спорт</span>
+								<span class="w3-tag w3-small w3-theme-d2">Ігри</span>
+								<span class="w3-tag w3-small w3-theme-d1">Спілкування</span>
+								<span class="w3-tag w3-small w3-theme">Дизайн</span>
+								<span class="w3-tag w3-small w3-theme-l1">Арт</span>
+								<span class="w3-tag w3-small w3-theme-l2">Програмування</span>
+								<span class="w3-tag w3-small w3-theme-l3">Література</span>
+								<span class="w3-tag w3-small w3-theme-l4">Малювання</span>
+								<span class="w3-tag w3-small w3-theme-l5">Навчання</span>
+							</p>
+						</div>
+					</div>
+					{% endblock interests %}
+					<br>
+					<!-- Alert Box -->
+					{% block alertBox %}
+					<div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+						<span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+						<i class="fa fa-remove"></i>
+						</span>
+						<p><strong>Агов!</strong></p>
+						<p>Це лише можливий варіант дизайну</p>
+					</div>
+					{% endblock alertBox %}
+					<!-- End Left Column -->
+				</div>
+				{% endblock leftColumn %}
 
-    <script type="text/javascript">
-      // const avatars = document.querySelectorAll('[class*="author-logo"]');
-      // // const avatars = document.querySelectorAll(".octave__author-logo");
+				<!-- Middle Column -->
+				{% block middleColumn %}
+				<div class="w3-col m7">
+					{% block writeOctave %}
+					<div class="w3-row-padding">
+						<div class="w3-col m12">
+							<div class="w3-card w3-round w3-white">
+								<div class="w3-container w3-padding">
+									<h6 class="w3-opacity">Напишіть свою октаву</h6>
+									<p contenteditable="true" class="w3-border w3-padding">Що нового?</p>
+									<button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> Опублікувати</button> 
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endblock writeOctave %}
+					{% block posts %}
+					<div class="w3-container w3-card w3-white w3-round w3-margin">
+						<br>
+						<img src="./Trembita.png" alt="Avatar" class="w3-left w3-circle w3-margin-right octave" style="width:60px">
+						<span class="w3-right w3-opacity">1 хв</span>
+						<h4>Трембіта</h4>
+						<br>
+						<!--<hr class="w3-clear">-->
+						<p>Які ваші найулюбленіші додатки на смартфоні?</p>
+						<!--<div class="w3-row-padding" style="margin:0 -16px">
+							<div class="w3-half">
+								<img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+							</div>
+							<div class="w3-half">
+								<img src="/w3images/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
+							</div>
+						</div>-->
+						<button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Лайк (576)</button> 
+						<button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Прокоментувати (254)</button> 
+					</div>
+					{% endblock posts %}
+					<!-- End Middle Column -->
+				</div>
+				{% endblock middleColumn %}
 
-      // avatars.forEach(function(elem){
-      //   elem.addEventListener("error", function(){
-      //     this.src = "{{ url_for('static', filename='img/user-icon.png') }}";
-      //   })
-      // })
-    </script>
-  </body>
+				<!-- Right Column -->
+				{% block rightColumn %}
+				<div class="w3-col m2">
+					<div class="w3-card w3-round w3-white w3-center">
+						<div class="w3-container">
+							<h4>Популярне</h4>
+							<!--<p>Популярне:</p>-->
+							<!--<img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">-->
+							<!--<p><strong>Популярне:</strong></p>-->
+							<p>Трембіта</br>
+							Україна</br>
+							#IPhone123</br>
+							серіал</p>
+							<p><button class="w3-button w3-block w3-theme-l4">Більше</button></p>
+						</div>
+					</div>
+					<br>
+					<div class="w3-card w3-round w3-white w3-center">
+						<div class="w3-container">
+							<p>Рекомендації підписок</p>
+							<!--<img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>-->
+							<span>Jane Doe</span>
+							<div class="w3-row w3-opacity">
+								<div class="w3-half">
+									<button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
+								</div>
+								<div class="w3-half">
+									<button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<!--<div class="w3-card w3-round w3-white w3-padding-16 w3-center">
+						<p>РЕКЛАМА(?)</p>
+					</div>
+					<br>
+					<div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+						<p><i class="fa fa-bug w3-xxlarge"></i></p>
+					</div>-->
+					<!-- End Right Column -->
+				</div>
+				{% endblock rightColumn %}
+				<!-- End Grid -->
+			</div>
+			<!-- End Page Container -->
+		</div>
+		<br>
+		<!-- Footer -->
+		{% block footer %}
+		<footer class="w3-container w3-theme-d3 w3-padding-16">
+			<h5>Footer</h5>
+		</footer>
+		<footer class="w3-container w3-theme-d5">
+			<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+		</footer>
+		{% endblock footer %}
+		<script>
+			// Accordion
+			function myFunction(id) {
+				var x = document.getElementById(id);
+				if (x.className.indexOf("w3-show") == -1) {
+					x.className += " w3-show";
+					x.previousElementSibling.className += " w3-theme-d1";
+				} else { 
+					x.className = x.className.replace("w3-show", "");
+					x.previousElementSibling.className = 
+					x.previousElementSibling.className.replace(" w3-theme-d1", "");
+				}
+			}
+			
+			// Used to toggle the menu on smaller screens when clicking on the menu button
+			function openNav() {
+				var x = document.getElementById("navDemo");
+				if (x.className.indexOf("w3-show") == -1) {
+					x.className += " w3-show";
+				} else { 
+					x.className = x.className.replace(" w3-show", "");
+				}
+			}
+		</script>
+	</body>
 </html>
