@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_babel import Babel
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 
@@ -35,9 +36,21 @@ def create_app():
     # Initialize Babel
     babel = Babel(app)
 
+    # Initialize JWT manager
+    jwt = JWTManager(app)
+
     from .models import User
     @loginManager.user_loader
     def LoadUser(userID): return User.query.get(int(userID))
     loginManager.login_message = "Будь ласка, увійдіть для перегляду сторінки"
+
+    @jwt.user_identity_loader
+    def UserIdentityLookup(user):
+        return user.id
+    
+    @jwt.user_lookup_loader
+    def UserLookupCallback(_jwt_header, jwt_data):
+        identity = jwt_data["sub"]
+        return User.query.filter_by(id=identity).one_or_none()
     
     return app
