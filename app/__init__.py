@@ -24,6 +24,8 @@ def create_app():
     app.register_blueprint(userBlueprint)
     from .routes.errors import errors as errorsBlueprint
     app.register_blueprint(errorsBlueprint)
+    from .routes.api import api as apiBlueprint
+    app.register_blueprint(apiBlueprint, url_prefix="/api")
 
     # Add login manager
     loginManager = LoginManager()
