@@ -1,5 +1,20 @@
 # Документація
 Цей документ пояснює використання деяких частей коду задля полегшення розробки
+## Web endpoints
+- `/home`
+- `/profile`
+- `/trending`
+- `/notifications`
+- `/other`
+- `/messages`
+- `/profile/<username>`
+- `/post`
+- `/subscribe`
+- `/uploads/avatars/<filename>`
+- `/uploads/<filename>`
+- `/login`
+- `/register`
+- `/logout`
 
 ## `base.html`
 Шаблон `base.html` це базовий шаблон, на якому базується відображання сторінок.
