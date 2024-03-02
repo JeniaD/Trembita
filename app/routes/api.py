@@ -38,3 +38,14 @@ def Login():
     
     accessToken = create_access_token(identity=username)
     return jsonify(access_token=accessToken)
+
+@api.route("/post", methods=["POST"])
+@jwt_required()
+def Post():
+    content = request.json.get("content")
+    current_user = get_jwt_identity()
+    post = Post(content=content, userID=current_user)
+    db.session.add(post)
+    db.session.commit()
+
+    return jsonify({"message": "success"}), 201
