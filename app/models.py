@@ -75,8 +75,8 @@ class Post(db.Model):
 
     creationDate = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f"<Post {self.title}>"
-    
     def LikesCount(self):
         return self.likers.count()
+
+    def __repr__(self):
+        return f"<Post {self.title}>"
