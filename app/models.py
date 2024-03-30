@@ -2,7 +2,7 @@ from app import db
 from flask_security import UserMixin
 from datetime import datetime
 
-subscriptions = db.Table("subscriptions",
+followings = db.Table("followings",
     db.Column("follower_id", db.Integer, db.ForeignKey("user.id")),
     db.Column("followed_id", db.Integer, db.ForeignKey("user.id"))
 )
@@ -13,27 +13,20 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=False, nullable=False)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    about = db.Column(db.String(100), default="")
+    creationDate = db.Column(db.DateTime, default=datetime.utcnow)
 
     email = db.Column(db.String(70), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
     active = db.Column(db.Boolean, default=True)
     private = db.Column(db.Boolean, default=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-
-    about = db.Column(db.String(100), default="")
-    posts = db.relationship("Post", backref="author", lazy="dynamic")
     
-    followers = db.relationship("User", secondary="subscriptions",
-                                    primaryjoin=(id == subscriptions.c.followed_id),
-                                    secondaryjoin=(id == subscriptions.c.follower_id),
-                                    backref=db.backref("follower", lazy="dynamic"),
-                                    lazy="dynamic")
-    following = db.relationship("User", secondary="subscriptions",
-                                    primaryjoin=(id == subscriptions.c.follower_id),
-                                    secondaryjoin=(id == subscriptions.c.followed_id),
-                                    backref=db.backref("followed", lazy="dynamic"),
-                                    lazy="dynamic")
+    following = db.relationship("User", secondary=followings, backref="followers")
+    posts = db.relationship("Post", backref="author")
+    
+    def IsSubscribed(self, user):
+        return user in self.followers
     
     def Subscribe(self, user):
         if not self.IsSubscribed(user):
@@ -44,9 +37,6 @@ class User(db.Model, UserMixin):
         if self.IsSubscribed(user):
             self.following.remove(user)
             return self
-    
-    def IsSubscribed(self, user):
-        return self.following.filter(subscriptions.c.followed_id == user.id).count() > 0 #follower_id
     
     def ClearSubscribers(self):
         for user in self.following:
@@ -60,12 +50,10 @@ class Post(db.Model):
     __tablename__ = "post"
 
     id = db.Column(db.Integer, primary_key=True)
-
     content = db.Column(db.String(100), nullable=False)
-    liked = db.relationship("User", backref="liker")
+    ownerID = db.Column(db.Integer, db.ForeignKey("author.id"))
 
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-    userID = db.Column(db.Integer, db.ForeignKey("user.id"))
+    creationDate = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f"<Post {self.title}>"
