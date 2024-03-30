@@ -24,6 +24,10 @@ class User(db.Model, UserMixin):
     
     following = db.relationship("User", secondary=followings, backref="followers")
     posts = db.relationship("Post", backref="author")
+
+    isCompany = db.Column(db.Boolean, default=False)
+    isProfessional = db.Column(db.Boolean, default=False)
+    isAdmin = db.Column(db.Boolean, default=False)
     
     def IsSubscribed(self, user):
         return user in self.followers
