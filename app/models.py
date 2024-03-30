@@ -31,6 +31,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship("Post", backref="author")
     likedPosts = db.relationship("Post", secondary=likes, backref="likers")
 
+    verified = db.Column(db.Boolean, default=False)
     isCompany = db.Column(db.Boolean, default=False)
     isProfessional = db.Column(db.Boolean, default=False)
     isAdmin = db.Column(db.Boolean, default=False)

@@ -11,7 +11,7 @@ if __name__ == "__main__":
         # InitRoles()
 
         # Create admin user
-        admin_user = User(name="Trembita", username="trembita", email="admin@trembita.com", password=generate_password_hash("admin"))
+        adminUser = User(name="Trembita", username="trembita", email="admin@trembita.com", password=generate_password_hash("admin"), isAdmin=True, verified=True)
         # admin_user.roles.append(admin_role)
-        db.session.add(admin_user)
+        db.session.add(adminUser)
         db.session.commit()
