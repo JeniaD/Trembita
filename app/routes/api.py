@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.models import User, Role
+from app.models import User
 from app import db
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
@@ -17,9 +17,7 @@ def Register():
 
     if user: return jsonify({"message": "Username already exists"}), 400
 
-    userRole = Role.query.filter_by(name="registeredUser").first()
     user = User(name=name, username=username, email=email, password=generate_password_hash(password))
-    user.roles.append(userRole)
     db.session.add(user)
     db.session.commit()
     
