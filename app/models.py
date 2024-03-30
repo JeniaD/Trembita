@@ -52,6 +52,16 @@ class User(db.Model, UserMixin):
         for user in self.following:
             self.Unsubscribe(user)
         db.session.commit()
+    
+    def LikePost(self, post):
+        if post not in self.likedPosts:
+            self.likedPosts.append(post)
+            db.session.commit()
+    
+    def UnlikePost(self, post):
+        if post in self.likedPosts:
+            self.likedPosts.remove(post)
+            db.session.commit()
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -68,3 +78,5 @@ class Post(db.Model):
     def __repr__(self):
         return f"<Post {self.title}>"
     
+    def LikesCount(self):
+        return self.likers.count()
