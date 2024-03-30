@@ -27,7 +27,10 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean, default=True)
     private = db.Column(db.Boolean, default=False)
     
-    following = db.relationship("User", secondary=followings, backref="followers")
+    following = db.relationship("User", secondary=followings, 
+                                primaryjoin=id==followings.c.follower_id,
+                                secondaryjoin=id==followings.c.followed_id,
+                                backref="followers")
     posts = db.relationship("Post", backref="author")
     likedPosts = db.relationship("Post", secondary=likes, backref="likers")
 
@@ -72,7 +75,7 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(100), nullable=False)
-    ownerID = db.Column(db.Integer, db.ForeignKey("author.id"))
+    ownerID = db.Column(db.Integer, db.ForeignKey("user.id")) #db.ForeignKey("author.id"))
 
     creationDate = db.Column(db.DateTime, default=datetime.utcnow)
 
