@@ -7,6 +7,11 @@ followings = db.Table("followings",
     db.Column("followed_id", db.Integer, db.ForeignKey("user.id"))
 )
 
+likes = db.Table("likes",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+    db.Column("post_id", db.Integer, db.ForeignKey("post.id"))
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = "user"
 
@@ -24,6 +29,7 @@ class User(db.Model, UserMixin):
     
     following = db.relationship("User", secondary=followings, backref="followers")
     posts = db.relationship("Post", backref="author")
+    likedPosts = db.relationship("Post", secondary=likes, backref="likers")
 
     isCompany = db.Column(db.Boolean, default=False)
     isProfessional = db.Column(db.Boolean, default=False)
@@ -61,3 +67,4 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"<Post {self.title}>"
+    
