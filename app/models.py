@@ -9,11 +9,9 @@ user_roles = db.Table(
     db.Column("role_id", db.Integer, db.ForeignKey("role.id"))
 )
 
-# Association table for user subscribers (users subscribed to other users)
-user_subscribers = db.Table(
-    "user_subscribers",
-    db.Column("subscriber_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
-    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
+subscriptions = db.Table("subscriptions",
+    db.Column("follower_id", db.Integer, db.ForeignKey("user.id")),
+    db.Column("followed_id", db.Integer, db.ForeignKey("user.id"))
 )
 
 class User(db.Model, UserMixin):
@@ -33,15 +31,35 @@ class User(db.Model, UserMixin):
 
     about = db.Column(db.String(100), default="")
     posts = db.relationship("Post", backref="author", lazy="dynamic")
-
-    following = db.relationship(
-        "User",
-        secondary=user_subscribers,
-        primaryjoin=(user_subscribers.c.subscriber_id == id),
-        secondaryjoin=(user_subscribers.c.user_id == id),
-        backref=db.backref("subscribers", lazy="dynamic"),
-        lazy="dynamic"
-    )
+    
+    followers = db.relationship("User", secondary="subscriptions",
+                                    primaryjoin=(id == subscriptions.c.followed_id),
+                                    secondaryjoin=(id == subscriptions.c.follower_id),
+                                    backref=db.backref("follower", lazy="dynamic"),
+                                    lazy="dynamic")
+    following = db.relationship("User", secondary="subscriptions",
+                                    primaryjoin=(id == subscriptions.c.follower_id),
+                                    secondaryjoin=(id == subscriptions.c.followed_id),
+                                    backref=db.backref("followed", lazy="dynamic"),
+                                    lazy="dynamic")
+    
+    def Subscribe(self, user):
+        if not self.IsSubscribed(user):
+            self.following.append(user)
+            return self
+    
+    def Unsubscribe(self, user):
+        if self.IsSubscribed(user):
+            self.following.remove(user)
+            return self
+    
+    def IsSubscribed(self, user):
+        return self.following.filter(subscriptions.c.followed_id == user.id).count() > 0 #follower_id
+    
+    def ClearSubscribers(self):
+        for user in self.following:
+            self.Unsubscribe(user)
+        db.session.commit()
 
     def __repr__(self):
         return f"<User {self.username}>"

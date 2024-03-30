@@ -1,13 +1,29 @@
-from flask import render_template, Blueprint, abort, request, jsonify
+from flask import render_template, Blueprint, abort, request, jsonify, redirect, url_for, current_app, flash
 from app.models import User, Post
 from flask_login import login_required, current_user
 from app import db
+import os
 
 user = Blueprint("user", __name__)
 
-@user.route("/profile")
+@user.route("/profile", methods=["GET", "POST"])
 @login_required
 def Profile():
+    if request.method == "POST":
+        name = request.form["name"]
+        username = request.form["username"]
+        about = request.form["about"]
+        avatar = request.files["avatar"]
+
+        if name: current_user.name = name
+        if username: current_user.username = username
+        if about: current_user.about = about
+        if avatar: avatar.save(os.path.join(current_app.config["UPLOAD_FOLDER"], f"avatars/{ current_user.id }.jpg"))
+
+        db.session.commit()
+
+        return redirect(url_for("user.Profile"))
+
     return render_template("profile.html")
 
 @user.route("/trending")
@@ -30,14 +46,18 @@ def Messages():
 def Other():
     return render_template("other.html")
 
-user.route("/profile/<username>")
+@user.route("/profile/<username>")
 def ShowProfile(username):
     username = username.replace('@', '')
+
+    if current_user.is_authenticated and current_user.username == username: return redirect(url_for("user.Profile"))
+
     user = User.query.filter_by(username=username).first()
     if not user: abort(404)
 
-    if user.private: render_template("user.html", name=user.name, username=user.username, about=user.about, private=True)
-    return render_template("user.html", name=user.name, username=user.username, about=user.about, posts=user.posts.all(), private=False)
+    return render_template("user.html", user=user, posts=user.posts.all())
+    # if user.private: render_template("user.html", name=user.name, username=user.username, about=user.about, private=True)
+    # return render_template("user.html", name=user.name, username=user.username, about=user.about, posts=user.posts.all(), private=False)
 
 @user.route("/home")
 @login_required
@@ -57,3 +77,44 @@ def MakePost():
     db.session.add(post)
     db.session.commit()
     return jsonify({"message": "Октава була опублікована"}), 201
+
+@user.route("/subscribe", methods=["POST"])
+@login_required
+def Subscribe():
+    userID = request.json.get("userID")
+    print(userID)
+    user = User.query.get(userID)
+    if user:
+        if current_user.IsSubscribed(user):
+            current_user.Unsubscribe(user)
+            print("unsub")
+        else:
+            print("sub")
+            current_user.Subscribe(user)
+    else:
+        return jsonify({"message": "Невідомий користувач"})
+    # user.ClearSubscribers()
+    # user.following.clear()
+    db.session.commit()
+    return jsonify({"message": "Підписка/відписка успішна"})
+
+    # username = request.args.get("username")
+    # if username: username = username.replace('@', '')
+    # print("Searching for", username)
+    # user = User.query.filter_by(username=username).first()
+
+    # if not user or not current_user:
+    #     flash("Неправильний ідентифікатор користувача")
+    #     return redirect(request.url)
+    #     #return jsonify({"message": "Неправильний ідентифікатор користувач"}), 400
+
+    # if current_user.IsSubscribed(user):
+    #     current_user.Unsubscribe(user)
+    #     print("Unsubscribed")
+    # else:
+    #     current_user.Subscribe(user)
+    #     print("Subscribed")
+
+    # # db.session.add(...)
+    # db.session.commit()
+    # # return jsonify({"message": "Підписка/відписка успішна"}), 201
