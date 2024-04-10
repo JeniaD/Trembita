@@ -83,4 +83,4 @@ class Post(db.Model):
         return self.likers.count()
 
     def __repr__(self):
-        return f"<Post {self.title}>"
+        return f"<Post {self.id}>"
