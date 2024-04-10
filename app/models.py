@@ -57,6 +57,7 @@ class User(db.Model, UserMixin):
             self.Unsubscribe(user)
         db.session.commit()
     
+    # WARNING: does post should be added, not post ID?
     def LikePost(self, post):
         if post not in self.likedPosts:
             self.likedPosts.append(post)
