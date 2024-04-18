@@ -16,6 +16,8 @@ def create_app():
 
     # Register blueprints
     from .routes.api import api as apiBlueprint
+    from .routes.users import users as usersBlueprint
+    apiBlueprint.register_blueprint(usersBlueprint, url_prefix="/users") # WARNING url_prefix
     app.register_blueprint(apiBlueprint, url_prefix="/api")
 
     # Initialize JWT manager
