@@ -7,11 +7,18 @@
 - `/post`
 - `/like`
 - `/unlike`
+- `/users/*`
 
-| Ендпоінт | Методи | Параметри | Повертає | Опис |
-|---|---|---|---|---|
-| `api/register` | POST | name, username, password, email | `access_token` | Реєстрація в Трембіті (буде змінено) |
-| `api/login` | POST | username, password | `access_token` | Вхід в обліковий запис |
-| `api/post` | POST | content | `201 {"message": "success"}` | Опублікувати октаву |
-| `api/like` | POST | postID | `201 {"message": "success"}` чи `404 {"message": "Post not found"}` | Залишити лайк на октаві |
-| `api/unlike` | POST | postID | `201 {"message": "success"}` чи `404 {"message": "Post not found"}` | Прибрати лайк з октави |
+| Ендпоінт | Методи | Параметри | Повертає | Опис | Необхідна авторизація |
+|---|---|---|---|---|---|
+| `api/users/username/*` | GET | - | `name`, `username`, `about`, `creationDate`, `active`, `private`, `following`, `followers` | Інформація про користувача з ніком... |&#10004;|
+| `api/users/id/*` | GET | - | `name`, `username`, `about`, `creationDate`, `active`, `private`, `following`, `followers` | Інформація про користувача з ID... |&#10004;|
+| `api/register` | POST | name, username, password, email | `access_token` | Реєстрація в Трембіті (буде змінено) |&#10004;|
+| `api/login` | POST | username, password | `access_token` | Вхід в обліковий запис |&#10004;|
+| `api/post` | POST | content | `{"message": "success"}` | Опублікувати октаву |&#10004;|
+| `api/like` | POST | postID | `{"message": "success"}` | Залишити лайк на октаві |&#10004;|
+| `api/unlike` | POST | postID | `{"message": "success"}` | Прибрати лайк з октави |&#10004;|
+
+## Status codes
+- 201 - успішний запит
+- 404 - сторінку не знайдено
