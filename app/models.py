@@ -37,6 +37,12 @@ class User(db.Model):
     isCompany = db.Column(db.Boolean, default=False)
     isProfessional = db.Column(db.Boolean, default=False)
     isAdmin = db.Column(db.Boolean, default=False)
+
+    def FollowersCount(self):
+        return len(self.followers)
+    
+    def FollowingCount(self):
+        return len(self.following)
     
     def IsSubscribed(self, user):
         return user in self.followers
