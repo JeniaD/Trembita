@@ -21,7 +21,7 @@ def Register():
     db.session.add(user)
     db.session.commit()
     
-    accessToken = create_access_token(identity=username)
+    accessToken = create_access_token(identity=user)
     return jsonify(access_token=accessToken)
 
 @api.route("/login", methods=["POST"])
@@ -34,7 +34,7 @@ def Login():
     if not user or not check_password_hash(user.password, password):
         return jsonify({"message": "Invalid credentials"}), 401
     
-    accessToken = create_access_token(identity=username)
+    accessToken = create_access_token(identity=user)
     return jsonify(access_token=accessToken)
 
 @api.route("/post", methods=["POST"])
