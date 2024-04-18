@@ -1,5 +1,4 @@
 from app import db
-from flask_security import UserMixin
 from datetime import datetime
 
 followings = db.Table("followings",
@@ -12,7 +11,7 @@ likes = db.Table("likes",
     db.Column("post_id", db.Integer, db.ForeignKey("post.id"))
 )
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
