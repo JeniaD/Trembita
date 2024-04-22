@@ -1,0 +1,7 @@
+*.code-workspace
+*.pyc
+venv
+__pycache__
+.backup
+instance
+uploads
