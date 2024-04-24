@@ -76,3 +76,23 @@ def Unlike():
         return jsonify({"message": "success"}), 201
     else:
         return jsonify({"message": "Post not found"}), 404
+
+@api.route("/updateProfile", methods=["POST"])
+@jwt_required()
+def UpdateProfile():
+    name = request.json.get("name")
+    username = request.json.get("username")
+    about = request.json.get("about")
+
+    if not username or not name: return jsonify({"message": "Wrong data"}), 422
+
+    user = User.query.filter_by(id=get_jwt_identity()).first()
+
+    if user: return jsonify({"message": "Username already exists"}), 400
+    user.name = name
+    user.username = username
+    user.about = about
+
+    db.session.commit()
+    
+    return jsonify({"message": "success"}), 201
