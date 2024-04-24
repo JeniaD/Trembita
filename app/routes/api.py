@@ -88,7 +88,7 @@ def UpdateProfile():
 
     user = User.query.filter_by(id=get_jwt_identity()).first()
 
-    if user: return jsonify({"message": "Username already exists"}), 400
+    if not user: return jsonify({"message": "User no longer exists"}), 400
     user.name = name
     user.username = username
     user.about = about
