@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.models import User
+from app.models import User, Post
 from app import db
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
@@ -39,10 +39,10 @@ def Login():
 
 @api.route("/post", methods=["POST"])
 @jwt_required()
-def Post():
+def MakePost():
     content = request.json.get("content")
     current_user = get_jwt_identity()
-    post = Post(content=content, userID=current_user)
+    post = Post(content=content, ownerID=current_user)
     db.session.add(post)
     db.session.commit()
 
@@ -76,3 +76,33 @@ def Unlike():
         return jsonify({"message": "success"}), 201
     else:
         return jsonify({"message": "Post not found"}), 404
+
+@api.route("/updateProfile", methods=["POST"])
+@jwt_required()
+def UpdateProfile():
+    name = request.json.get("name")
+    username = request.json.get("username")
+    about = request.json.get("about")
+
+    if not username or not name: return jsonify({"message": "Wrong data"}), 422
+
+    user = User.query.filter_by(id=get_jwt_identity()).first()
+
+    if not user: return jsonify({"message": "User no longer exists"}), 400 # Should users shortly after deletion be able to act for some time?
+    user.name = name
+    user.username = username
+    user.about = about
+
+    db.session.commit()
+    
+    return jsonify({"message": "success"}), 201
+
+@api.route("/topPosts", methods=["GET"])
+@jwt_required()
+def TopPosts():
+    posts = Post.query.order_by(Post.creationDate.desc()).limit(50).all()
+    posts.sort(key=lambda post: post.LikesCount, reverse=True)
+
+    res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
+    
+    return jsonify(posts=res), 201
