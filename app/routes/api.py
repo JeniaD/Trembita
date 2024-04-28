@@ -106,3 +106,27 @@ def TopPosts():
     res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
     
     return jsonify(posts=res), 201
+
+# @api.route("/trends", methods=["GET"])
+# @jwt_required()
+# def TopPosts():
+#     posts = Post.query.order_by(Post.creationDate.desc()).limit(50).all()
+#     posts.sort(key=lambda post: post.LikesCount, reverse=True)
+
+#     res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
+    
+#     return jsonify(posts=res), 201
+
+@api.route("/subscribedPosts", methods=["GET"])
+@jwt_required()
+def FollowersPosts():
+    page = request.args.get("page", 1, type=int)
+    perPage = request.args.get("perPage", 30, type=int)
+
+    followings = User.query.get(get_jwt_identity()).following
+    posts = Post.query.filter(Post.author_id.in_([user.id for user in followings])).order_by(Post.creationDate.desc()).paginate(page, perPage, error_out=False)
+    posts.sort(key=lambda post: post.LikesCount, reverse=True) # WARNING: optional
+
+    res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
+    
+    return jsonify(posts=res), 201
