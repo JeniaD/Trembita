@@ -22,6 +22,7 @@
 | `api/unlike` | POST | postID | `{"message": "success"}` | Прибрати лайк з октави |&#10004;|
 | `api/updateProfile` | POST | name, username, about | `{"message": "success"}` | Змінити дані профілю. Поля, які не будуть змінені теж мають бути відправлені |&#10004;|
 | `api/topPosts` | GET | - | Масив `{id, content, creationDate, likesCount}` | 50 популярних постів |&#10004;|
+| `api/subscribedPosts` | GET | page=1, perPage=30 | Масив `{id, content, creationDate, likesCount}` | Пости з підписок |&#10004;|
 
 ## Status codes
 - 200, 201 - успішний запит
