@@ -15,7 +15,7 @@ def Register():
 
     user = User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first()
 
-    if user: return jsonify({"message": "Username already exists"}), 400
+    if user: return jsonify({"message": "User already exists"}), 400
 
     user = User(name=name, username=username, email=email, password=generate_password_hash(password))
     db.session.add(user)
