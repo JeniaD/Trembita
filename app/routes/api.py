@@ -100,7 +100,10 @@ def UpdateProfile():
 @api.route("/topPosts", methods=["GET"])
 @jwt_required()
 def TopPosts():
-    posts = Post.query.order_by(Post.creationDate.desc()).limit(50).all()
+    page = request.args.get("page", 1, type=int)
+    perPage = request.args.get("perPage", 30, type=int)
+
+    posts = Post.query.order_by(Post.creationDate.desc()).limit(500).all().paginate(page, perPage, error_out=False) # WARNING
     posts.sort(key=lambda post: post.LikesCount, reverse=True)
 
     res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
