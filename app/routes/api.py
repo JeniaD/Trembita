@@ -15,7 +15,7 @@ def Register():
 
     user = User.query.filter_by(email=email).first() or User.query.filter_by(username=username).first()
 
-    if user: return jsonify({"message": "Username already exists"}), 400
+    if user: return jsonify({"message": "User already exists"}), 400
 
     user = User(name=name, username=username, email=email, password=generate_password_hash(password))
     db.session.add(user)
@@ -100,8 +100,35 @@ def UpdateProfile():
 @api.route("/topPosts", methods=["GET"])
 @jwt_required()
 def TopPosts():
-    posts = Post.query.order_by(Post.creationDate.desc()).limit(50).all()
+    page = request.args.get("page", 1, type=int)
+    perPage = request.args.get("perPage", 30, type=int)
+
+    posts = Post.query.order_by(Post.creationDate.desc()).limit(500).all().paginate(page, perPage, error_out=False) # WARNING
     posts.sort(key=lambda post: post.LikesCount, reverse=True)
+
+    res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
+    
+    return jsonify(posts=res), 201
+
+# @api.route("/trends", methods=["GET"])
+# @jwt_required()
+# def TopPosts():
+#     posts = Post.query.order_by(Post.creationDate.desc()).limit(50).all()
+#     posts.sort(key=lambda post: post.LikesCount, reverse=True)
+
+#     res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
+    
+#     return jsonify(posts=res), 201
+
+@api.route("/subscribedPosts", methods=["GET"])
+@jwt_required()
+def FollowersPosts():
+    page = request.args.get("page", 1, type=int)
+    perPage = request.args.get("perPage", 30, type=int)
+
+    followings = User.query.get(get_jwt_identity()).following
+    posts = Post.query.filter(Post.author_id.in_([user.id for user in followings])).order_by(Post.creationDate.desc()).paginate(page, perPage, error_out=False)
+    posts.sort(key=lambda post: post.LikesCount, reverse=True) # WARNING: optional
 
     res = [{"id": post.id, "content": post.content, "creationDate": post.creationDate.strftime("%Y-%m-%d %H:%M:%S"), "likesCount": post.LikesCount} for post in posts]
     

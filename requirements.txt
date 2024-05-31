@@ -4,3 +4,4 @@ SQLAlchemy
 MarkupSafe
 werkzeug
 flask-jwt-extended
+flask-cors
