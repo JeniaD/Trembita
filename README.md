@@ -11,7 +11,7 @@
 ### Запуск
 #### В Docker
 1. Створіть контейнер `sudo docker build -t trembita .`
-2. Запустіть застосунок `sudo docker run -p 5000:5000 trembita`. Ви можете змінити порт 5000 на інший
+2. Запустіть застосунок `sudo docker run -p 8000:8000 trembita`. Ви можете змінити порт 8000 на інший
 3. Для відлагодження `sudo docker run -it trembita /bin/bash`
 
 #### Для розробки
@@ -27,9 +27,7 @@ pip3 install -r requirements.txt
 ```
 4. Запустіть застосунок
 ```
-flask run # Звичайний запуск
-
-flask run --host=0.0.0.0 --debug # Режим тестування і налагодження
+uvicorn trembita.main:app --reload
 ```
 
 ## Контакти
