@@ -11,23 +11,24 @@
 ### Запуск
 #### В Docker
 1. Створіть контейнер `sudo docker build -t trembita .`
-2. Запустіть застосунок `sudo docker run -p 8000:8000 trembita`. Ви можете змінити порт 8000 на інший
+2. Запустіть застосунок `sudo docker run -p 8000:80 trembita`. Ви можете змінити порт 8000 на інший
 3. Для відлагодження `sudo docker run -it trembita /bin/bash`
+4. Для зупинки контейнеру `sudo docker ps` та `sudo docker stop *ім'я*`
 
 #### Для розробки
 1. Встановіть Python, завантажте репозиторій та перейдіть в нього
 2. Створіть віртуальне середовище та активуйте його
 ```
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 ```
 3. Встановіть залежності
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
-4. Запустіть застосунок
+4. Запустіть застосунок (змініть порт 80 на потрібний)
 ```
-uvicorn trembita.main:app --reload
+uvicorn trembita.main:app --reload --host 0.0.0.0 --port 80
 ```
 
 ## Контакти
